@@ -1,0 +1,95 @@
+{
+  "_package-db369734.js": {
+    "file": "assets/package-db369734.js"
+  },
+  "index.css": {
+    "file": "assets/index-61b33d69.css",
+    "src": "index.css"
+  },
+  "index.html": {
+    "assets": [
+      "assets/df-avatar-b9a54527.png"
+    ],
+    "css": [
+      "assets/index-61b33d69.css"
+    ],
+    "dynamicImports": [
+      "src/pages/Home.vue",
+      "src/pages/About.vue",
+      "src/pages/NoPermission.vue",
+      "src/components/Header/AppMenu.vue",
+      "src/components/Login/LoginForm.vue"
+    ],
+    "file": "assets/index-65d32525.js",
+    "isEntry": true,
+    "src": "index.html"
+  },
+  "src/assets/df-avatar.png": {
+    "file": "assets/df-avatar-b9a54527.png",
+    "src": "src/assets/df-avatar.png"
+  },
+  "src/components/Header/AppMenu.css": {
+    "file": "assets/AppMenu-64b5cdab.css",
+    "src": "src/components/Header/AppMenu.css"
+  },
+  "src/components/Header/AppMenu.vue": {
+    "css": [
+      "assets/AppMenu-64b5cdab.css"
+    ],
+    "file": "assets/AppMenu-7d2b83f5.js",
+    "isDynamicEntry": true,
+    "src": "src/components/Header/AppMenu.vue"
+  },
+  "src/components/Login/LoginForm.css": {
+    "file": "assets/LoginForm-d10d675b.css",
+    "src": "src/components/Login/LoginForm.css"
+  },
+  "src/components/Login/LoginForm.vue": {
+    "css": [
+      "assets/LoginForm-d10d675b.css"
+    ],
+    "file": "assets/LoginForm-f6c6e029.js",
+    "isDynamicEntry": true,
+    "src": "src/components/Login/LoginForm.vue"
+  },
+  "src/pages/About.css": {
+    "file": "assets/About-b8d96118.css",
+    "src": "src/pages/About.css"
+  },
+  "src/pages/About.vue": {
+    "css": [
+      "assets/About-b8d96118.css"
+    ],
+    "file": "assets/About-b706df31.js",
+    "imports": [
+      "_package-db369734.js",
+      "index.html"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/pages/About.vue"
+  },
+  "src/pages/Home.css": {
+    "file": "assets/Home-bd14f7b2.css",
+    "src": "src/pages/Home.css"
+  },
+  "src/pages/Home.vue": {
+    "css": [
+      "assets/Home-bd14f7b2.css"
+    ],
+    "file": "assets/Home-fc1ddc9f.js",
+    "imports": [
+      "_package-db369734.js",
+      "index.html"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/pages/Home.vue"
+  },
+  "src/pages/NoPermission.vue": {
+    "file": "assets/NoPermission-b6cb67b1.js",
+    "imports": [
+      "index.html"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/pages/NoPermission.vue"
+  }
+}
