@@ -2,6 +2,8 @@
   <div>HelloWorld !!!</div>
   <div>
     <button @click="num++">t-1 : {{ num }}</button>
+    <button @click="num++">t-2 : {{ num }}</button>
+    <button @click="num++">t-3 : {{ num }}</button>
   </div>
 </template>
 <script setup>
