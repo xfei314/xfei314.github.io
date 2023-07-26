@@ -17,7 +17,7 @@ export default defineConfig(({ command, mode }) => {
     isDev: mode === "development",
     port: 8800,
     appName, // 项目名称
-    oslUrl: mode === "https://xfei314.github.io" ? "" : "//localhost:8001", // 在线共享库地址
+    oslUrl: mode === "prod" ? "https://xfei314.github.io" : "//localhost:8001", // 在线共享库地址
     oslBase: "/v1/osl", // 共享库 base
     path: mode === "prod" ? "" : "D:\\js\\xdp\\v1\\plf", // portal文件地址可以不设置
   };
