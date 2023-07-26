@@ -1,0 +1,10 @@
+public
+dist
+vite.config.js
+.eslintrc.cjs
+
+
+components.d.ts
+auto-imports.d.ts
+.vscode
+.husky

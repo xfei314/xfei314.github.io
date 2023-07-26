@@ -1,13 +1,108 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
+    <title>xdp - Onestop Rapid Development Platform</title>
+    <style>
+      #xdp-portal,
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      #xdp-portal .page-loading {
+        background: linear-gradient(180deg, #2b5876, #2b2d42);
+        height: 100%;
+        width: 100%;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox {
+        left: 50%;
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar {
+        animation: xdp-loading 1.5s ease-in-out infinite;
+        background: #fff;
+        display: inline-block;
+        height: 2px;
+        transform-origin: bottom center;
+        width: 6px;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b1 {
+        animation-delay: 0.1s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b2 {
+        animation-delay: 0.2s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b3 {
+        animation-delay: 0.3s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b4 {
+        animation-delay: 0.4s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b5 {
+        animation-delay: 0.5s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b6 {
+        animation-delay: 0.6s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b7 {
+        animation-delay: 0.7s;
+      }
+
+      #xdp-portal .page-loading .xdpl-mbox .bar.b8 {
+        animation-delay: 0.8s;
+      }
+
+      @keyframes xdp-loading {
+        0% {
+          background: #fff;
+          transform: scaleY(0.1);
+        }
+
+        50% {
+          background: #2ecc71;
+          transform: scaleY(30);
+        }
+
+        to {
+          background: transparent;
+          transform: scaleY(0.1);
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="xdp-portal">
+      <div class="page-loading">
+        <div class="xdpl-mbox">
+          <div class="bar b1"></div>
+          <div class="bar b2"></div>
+          <div class="bar b3"></div>
+          <div class="bar b4"></div>
+          <div class="bar b5"></div>
+          <div class="bar b6"></div>
+          <div class="bar b7"></div>
+          <div class="bar b8"></div>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

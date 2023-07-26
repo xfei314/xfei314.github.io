@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "types": ["xdp/ui/components"],
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "@root/*": ["/*"],
+      "@/*": ["src/*"]
+    }
+  },
+  /** 编译器默认排除的编译文件 */
+  "exclude": ["node_modules", "dist"]
+}
