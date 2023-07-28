@@ -1,24 +1,22 @@
 import { defineStore } from "pinia";
 import router, { addRoute, push } from "@/router";
 import { useI18n } from "vue-i18n"; //引入vue-i18n组件
-import { watchEffect, watch } from "vue";
+import { watch, watchEffect } from "vue";
 import { debounce } from "lodash-es";
-
-function addCss(url) {
-  const ele = document.createElement("link");
-  ele.type = "text/css";
-  ele.rel = "stylesheet";
-  ele.href = url;
-  document.head.appendChild(ele);
-}
+import { addCss } from "@/utils";
 function getAppNameByUrl() {
   const arr = location.hash.split("/");
   const appName = arr[1] ?? "";
   if (!appName) return "";
   return appName;
 }
-let hostMap = {};
+// 记录 app 的 host
+let hostMap = {
+  // t1: "/v1/app/t1",
+  // t2: "t2",
+};
 function loadHostMap() {
+  // 调试用
   try {
     let str = localStorage.getItem("hostMap");
     if (str) {
@@ -27,6 +25,7 @@ function loadHostMap() {
   } catch (error) {}
 }
 loadHostMap();
+
 export default defineStore("loadAppStore", () => {
   const appScript = {};
   console.log("xx loadAppStore init ");
@@ -37,58 +36,54 @@ export default defineStore("loadAppStore", () => {
    * @returns
    */
   async function loadApp(name) {
+    console.log(`xx loadApp [${new Date().getTime()}]:`, name);
     // 加载子产品
     // 已经加载过的app
     if (appScript[name]) return;
     // 加载子产品文件
-    let host = hostMap[name] ?? "";
-    let entry = "";
-    if (host) {
-      entry = host;
+    const dfHost = hostMap["df"] ?? "/v1";
+    let host = hostMap[name] ?? dfHost;
+    // app 本地调试
+    if (window.__XDP_DEV_TYPE === "app") {
       // 找到入口文件 然后加载
       let subAppJsUrl = `${host}/src/index.js`;
-      const subRes = await import(/* @vite-ignore */ subAppJsUrl);
-      const subApp = await subRes.default();
-      appScript[name] = subApp;
-      initApp(subApp);
-    } else {
-      // 本地开发
-      if (window.__XDP_DEV_TYPE === "app") {
-        host = window.__XDP_DEV_SOL_HOST;
-      } else {
-        host = "";
-      }
-      entry = `${host}/v3/app/${name}`;
-
-      const res = await fetch(`${entry}/manifest.json?t=${new Date().getTime()}`).catch(error => {
-        console.log(`subapp [${name}] not find`, error);
-      });
-      if (!res) return;
-      console.log("x fetch entry ", res);
-      const manifest = await res.json();
-      console.log("x fetch manifest ", manifest);
-      let subEntry = null;
-      for (const key in manifest) {
-        const item = manifest[key];
-        if (item.isEntry) {
-          subEntry = item;
-          break;
-        }
-      }
-      if (!subEntry) return;
-      const subAppJsUrl = `${entry}/${subEntry.file}`;
-      if (subEntry.css) {
-        for (const css of subEntry.css) {
-          const cssUrl = `${entry}/${css}`;
-          addCss(cssUrl);
-        }
-      }
-      // 找到入口文件 然后加载
-      const subRes = await import(/* @vite-ignore */ subAppJsUrl);
-      const subApp = await subRes.default();
-      appScript[name] = subApp;
-      initApp(subApp);
+      loadByEntryUrl(name, subAppJsUrl);
+      return;
     }
+    // 获得app 的配置信息 manifest.json
+    let entry = `${host}/${name}`;
+    const res = await fetch(`${entry}/manifest.json?t=${new Date().getTime()}`).catch(error => {
+      console.log(`subapp [${name}] not find`, error);
+    });
+    if (!res?.ok) return;
+    console.log("x fetch entry ", res);
+    const manifest = await res.json();
+    console.log("x fetch manifest ", manifest);
+    let subEntry = null;
+    for (const key in manifest) {
+      const item = manifest[key];
+      if (item.isEntry) {
+        subEntry = item;
+        break;
+      }
+    }
+    if (!subEntry) return;
+    const subAppJsUrl = `${entry}/${subEntry.file}`;
+    if (subEntry.css) {
+      for (const css of subEntry.css) {
+        const cssUrl = `${entry}/${css}`;
+        addCss(cssUrl);
+      }
+    }
+    // 找到入口文件 然后加载
+    loadByEntryUrl(name, subAppJsUrl);
+  }
+  async function loadByEntryUrl(name, url) {
+    // 找到入口文件 然后加载
+    const subRes = await import(/* @vite-ignore */ url);
+    const subApp = await subRes.default();
+    appScript[name] = subApp;
+    initApp(subApp);
   }
   // 初始化子产品
   function initApp(subApp) {
@@ -116,8 +111,8 @@ export default defineStore("loadAppStore", () => {
     const lang = locale.value;
     if (!lang) return;
     // 刷新各个子产品的语言
-    for (let key in appScript) {
-      const subApp = appScript[key];
+    for (const name in appScript) {
+      const subApp = appScript[name];
       const appI18n = subApp.i18n;
       if (typeof appI18n === "function") {
         appI18n(lang).then(i18n => {
@@ -127,24 +122,19 @@ export default defineStore("loadAppStore", () => {
     }
   });
 
-  // 路由变化
-  const hashChange = debounce(function () {
+  const onUrlChange = debounce(() => {
     const appName = getAppNameByUrl();
-    console.log("x urlChange appName:", appName);
+    console.log(`xxxx onUrlChange [${new Date().getTime()}] urlChange appName `, appName);
     if (!appName) {
-      router.push("/home");
+      // 默认页
+      push("/home");
       return;
     }
     if (["about", "home"].includes(appName)) return;
     loadApp(appName);
   }, 20);
-  // 监听 路由变化
-  watch(
-    () => router.currentRoute.value.fullPath,
-    url => {
-      if (!url) return;
-      console.log("x urlChange currentRoute:", url);
-      hashChange();
-    }
-  );
+  // watch(() => router.currentRoute.value.fullPath, urlChange);
+  // onUrlChange 事件
+  window.__OSL.onUrlChange(onUrlChange);
+  onUrlChange();
 });

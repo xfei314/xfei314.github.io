@@ -1,6 +1,6 @@
 <template>
 	<div class="about">
-		<h1>about - appName: {{ appName }}</h1>
+		<h1>about  </h1>
 		<h2>h5 原生标签</h2>
 		<div class="box">
 			<h3>1 点击选择颜色</h3>
@@ -45,8 +45,7 @@
 		<div class="box"></div>
 	</div>
 </template>
-<script setup>
-import { name as appName } from "@package";
+<script setup> 
 import { ref } from "vue";
 const color = ref("");
 const date = ref(null);

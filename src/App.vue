@@ -5,7 +5,9 @@
       <LeftMenu />
       <div class="portal-content-main">
         <MainTabs />
-        <router-view class="portal-app-view" />
+        <div class="portal-app-view">
+          <router-view />
+        </div>
       </div>
     </div>
     <div class="portal-footer"></div>
@@ -21,6 +23,7 @@ import LeftMenu from "@/components/LeftMenu/LeftMenu.vue";
 import MainTabs from "@/components/MainTabs.vue";
 import useSystem from "@/store/system";
 import loginWin from "@/components/Login/index.vue";
+
 const { state } = useSystem();
 </script>
 <style lang="less">

@@ -7,7 +7,7 @@ import i18n from "@/i18n";
 import App from "@/App.vue";
 import registerDirectives from "@/directives";
 import { Icon } from "@/components/Icon";
-import { addJs, setThemeColor } from "./utils";
+import { addJs } from "./utils";
 
 const app = createApp(App);
 registerDirectives(app);
@@ -23,6 +23,4 @@ permission();
 setTimeout(() => {
   const url = new URL(`/font/iconfont.js?_v=20230713`, import.meta.url).href;
   addJs(url);
-
-  // setThemeColor("#18a058");
 }, 200);

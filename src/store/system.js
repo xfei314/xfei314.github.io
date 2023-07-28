@@ -1,3 +1,4 @@
+import useLoadApp from "@/store/loadApp";
 import { reactive, watchPostEffect, watch } from "vue";
 import { defineStore } from "pinia";
 import { useI18n } from "vue-i18n";
@@ -6,11 +7,12 @@ import en_US from "xdp/ui/locale/lang/en-us";
 import { setToken, addInterceptorsRequest, addInterceptorsResponse } from "@/libs/request";
 import { setSessionData } from "@/utils";
 import * as userApi from "@/api/user";
-import useLoadApp from "@/store/loadApp";
+
 import { Message } from "xdp";
 import { cloneDeep } from "lodash-es";
 import { isDev, sleep, setThemeColor } from "@/utils";
 import { push } from "@/router";
+
 const uiI18n = {
   zh_CN,
   en_US,
@@ -83,7 +85,6 @@ addAllRequestFn();
 
 export default defineStore("systemStore", () => {
   console.log("xx useSystemStore init ");
-
   const state = reactive({
     xdpLoading: false,
     showLoginWin: false,
@@ -232,8 +233,8 @@ export default defineStore("systemStore", () => {
     { id: "zh_CN", value: "中文" },
     { id: "en_US", value: "English" },
   ]);
-
   useLoadApp();
   initUser();
+
   return { state, showLoading, hideLoading, login, logout, changeLang, changeTheme, setLangList };
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="portal-aside" ref="refMain">
+  <aside class="portal-aside" ref="refMain">
     <x-menu
       :style="{ width: '200px' }"
       show-collapse-button
@@ -13,7 +13,7 @@
     >
       <MenuTree v-bind="{ id: rootId, rootId: rootId, menus: state.menus }" />
     </x-menu>
-  </div>
+  </aside>
 </template>
 <script setup>
 import { ref, watchPostEffect } from "vue";

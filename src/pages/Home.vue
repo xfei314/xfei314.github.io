@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>home - appName: {{ appName }}</h1>
+    <h1>home</h1>
     <x-button> default btn </x-button>
 
     <x-button type="primary" @click="onClick1"> 主题 </x-button>
@@ -15,8 +15,6 @@
   </div>
 </template>
 <script setup>
-import { name as appName } from "@package";
-
 import { Message } from "xdp";
 import useSystem from "@/store/system";
 const { state } = useSystem();

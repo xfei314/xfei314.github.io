@@ -1,5 +1,5 @@
 <template>
-  <div class="portal-header" ref="refMain">
+  <header class="portal-header" ref="refMain">
     <div class="logo">
       <div class="menu-btn" @click="changeAppMenuVisible">
         <icon :name="data.appMenuVisible ? 'xp-close' : 'xp-menu'" />
@@ -9,14 +9,6 @@
       </div>
     </div>
     <div class="right-box">
-      <x-dropdown @select="menuCommand">
-        <span class="x-dropdown-btn"> 跳转菜单 <icon name="xp-arrow_down" /> </span>
-        <template #content>
-          <x-doption v-for="item in data.meunList" :key="item.id" :value="item.id">
-            {{ item.value }}
-          </x-doption>
-        </template>
-      </x-dropdown>
       <x-dropdown v-model:popup-visible="langVisible" @select="langCommand">
         <span class="x-dropdown-btn">
           <icon name="xp-i18n" /> <icon :name="langVisible ? 'xp-arrow_up' : 'xp-arrow_down'" />
@@ -46,7 +38,7 @@
       </x-dropdown>
     </div>
     <MenuDrawer :top="data.headerHeight" v-model="data.appMenuVisible" />
-  </div>
+  </header>
 </template>
 <script setup>
 import MenuDrawer from "./MenuDrawer.vue";
@@ -61,19 +53,7 @@ const { state: systemState, logout, changeTheme, changeLang } = useSystem();
 const refMain = ref(null);
 const data = reactive({
   appMenuVisible: false,
-
   headerHeight: 0,
-  menuId: "",
-  meunList: [
-    { id: 1, link: "/home", value: "portal home" },
-    { id: 2, link: "/about", value: "portal about" },
-    { id: 11, link: "/xdp-t1", value: "xt1 home" },
-    { id: 12, link: "/xdp-t1/about", value: "xt1 about" },
-    { id: 21, link: "/xdp-t2", value: "xt2 home" },
-    { id: 22, link: "/xdp-t2/about", value: "xt2 about" },
-    { id: 31, link: "/xdp-t3", value: "xt3 home" },
-    { id: 32, link: "/xdp-t3/about", value: "xt3 about" },
-  ],
   userMeunList: [
     {
       id: "logout",
@@ -124,13 +104,6 @@ function userCommand(id) {
       logout();
       break;
   }
-}
-function menuCommand(id) {
-  const item = data.meunList.find(r => r.id === id);
-  if (!item) return;
-
-  data.menuId = id;
-  push(item.link);
 }
 </script>
 
