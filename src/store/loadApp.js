@@ -156,5 +156,9 @@ export default defineStore("loadAppStore", () => {
   // watch(() => router.currentRoute.value.fullPath, urlChange);
   // onUrlChange 事件
   window.__OSL.onUrlChange(onUrlChange);
-  onUrlChange();
+  function pageStart() {
+    NProgress.start();
+    onUrlChange();
+  }
+  pageStart();
 });
