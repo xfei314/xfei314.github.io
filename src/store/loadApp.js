@@ -1,9 +1,12 @@
 import { defineStore } from "pinia";
+import NProgress from "nprogress";
 import router, { addRoute, push } from "@/router";
-import { useI18n } from "vue-i18n"; //引入vue-i18n组件
-import { watch, watchEffect } from "vue";
+import { watchEffect } from "vue";
 import { debounce } from "lodash-es";
 import { addCss } from "@/utils";
+import useSystem from "@/store/system";
+NProgress.configure({ showSpinner: false });
+
 function getAppNameByUrl() {
   const arr = location.hash.split("/");
   const appName = arr[1] ?? "";
@@ -27,9 +30,10 @@ function loadHostMap() {
 loadHostMap();
 
 export default defineStore("loadAppStore", () => {
+  const { state, mergeLocaleMessage } = useSystem();
   const appScript = {};
   console.log("xx loadAppStore init ");
-  const { mergeLocaleMessage, locale } = useI18n();
+
   /**
    * 加载子产品
    * @param {子产品名称} name
@@ -47,7 +51,7 @@ export default defineStore("loadAppStore", () => {
     if (window.__XDP_DEV_TYPE === "app") {
       // 找到入口文件 然后加载
       let subAppJsUrl = `${host}/src/index.js`;
-      loadByEntryUrl(name, subAppJsUrl);
+      await loadByEntryUrl(name, subAppJsUrl);
       return;
     }
     // 获得app 的配置信息 manifest.json
@@ -76,24 +80,25 @@ export default defineStore("loadAppStore", () => {
       }
     }
     // 找到入口文件 然后加载
-    loadByEntryUrl(name, subAppJsUrl);
+    await loadByEntryUrl(name, subAppJsUrl);
+    return;
   }
   async function loadByEntryUrl(name, url) {
     // 找到入口文件 然后加载
     const subRes = await import(/* @vite-ignore */ url);
     const subApp = await subRes.default();
     appScript[name] = subApp;
-    initApp(subApp);
+    return initApp(subApp);
   }
   // 初始化子产品
-  function initApp(subApp) {
+  async function initApp(subApp) {
     // 添加 子产品的 路由， 跳转默认地址
     addRoute(subApp.routes);
     push("");
     // 同步 i18n
     const appI18n = subApp.i18n;
     if (typeof appI18n === "function") {
-      const lang = locale.value;
+      const lang = state.lang;
       if (lang) {
         appI18n(lang).then(i18n => {
           mergeLocaleMessage(lang, i18n);
@@ -104,11 +109,12 @@ export default defineStore("loadAppStore", () => {
         mergeLocaleMessage(lang, appI18n[lang]);
       }
     }
+    return;
   }
 
   // 国际化语言变化
   watchEffect(() => {
-    const lang = locale.value;
+    const lang = state.lang;
     if (!lang) return;
     // 刷新各个子产品的语言
     for (const name in appScript) {
@@ -122,16 +128,30 @@ export default defineStore("loadAppStore", () => {
     }
   });
 
+  const npDone = debounce(() => {
+    NProgress.done();
+  }, 50);
+  // url 修改
+  router.beforeEach((to, from, next) => {
+    NProgress.start();
+    next();
+  });
   const onUrlChange = debounce(() => {
     const appName = getAppNameByUrl();
     console.log(`xxxx onUrlChange [${new Date().getTime()}] urlChange appName `, appName);
     if (!appName) {
       // 默认页
       push("/home");
+      npDone();
       return;
     }
-    if (["about", "home"].includes(appName)) return;
-    loadApp(appName);
+    if (["about", "home"].includes(appName)) {
+      npDone();
+      return;
+    }
+    loadApp(appName).then(() => {
+      npDone();
+    });
   }, 20);
   // watch(() => router.currentRoute.value.fullPath, urlChange);
   // onUrlChange 事件

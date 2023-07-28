@@ -1,4 +1,3 @@
-import useLoadApp from "@/store/loadApp";
 import { reactive, watchPostEffect, watch } from "vue";
 import { defineStore } from "pinia";
 import { useI18n } from "vue-i18n";
@@ -127,7 +126,7 @@ export default defineStore("systemStore", () => {
     }
   );
 
-  const { locale } = useI18n();
+  const { locale, mergeLocaleMessage } = useI18n();
   function showLoading() {
     state.xdpLoading = true;
   }
@@ -233,8 +232,6 @@ export default defineStore("systemStore", () => {
     { id: "zh_CN", value: "中文" },
     { id: "en_US", value: "English" },
   ]);
-  useLoadApp();
   initUser();
-
-  return { state, showLoading, hideLoading, login, logout, changeLang, changeTheme, setLangList };
+  return { state, showLoading, hideLoading, login, logout, changeLang, changeTheme, setLangList, mergeLocaleMessage };
 });

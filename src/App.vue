@@ -23,8 +23,9 @@ import LeftMenu from "@/components/LeftMenu/LeftMenu.vue";
 import MainTabs from "@/components/MainTabs.vue";
 import useSystem from "@/store/system";
 import loginWin from "@/components/Login/index.vue";
-
+import useLoadApp from "@/store/loadApp";
 const { state } = useSystem();
+useLoadApp();
 </script>
 <style lang="less">
 #xdp-portal {

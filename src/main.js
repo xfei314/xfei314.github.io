@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import "./theme";
-import permission from "./permission";
+// import permission from "./permission";
 import router from "@/router";
 import i18n from "@/i18n";
 import App from "@/App.vue";
@@ -17,7 +17,7 @@ app.use(i18n);
 app.use(Icon);
 app.mount(document.querySelector("#xdp-portal"));
 
-permission();
+// permission();
 
 // 动态添加 icon
 setTimeout(() => {
