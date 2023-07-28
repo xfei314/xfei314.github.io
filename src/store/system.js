@@ -126,15 +126,18 @@ export default defineStore("systemStore", () => {
     }
     return menu;
   }
-  watch(() => state.menus, urlChage);
+  watch(
+    () => state.menus,
+    () => {
+      if (state.menus.length === 0) return;
+      urlChage();
+    }
+  );
   function urlChage() {
     const fullPath = router.currentRoute.value.fullPath;
-    console.log("x system urlChage fullPath", fullPath);
     if (fullPath === "/") return;
-
-    console.log("x system urlChage", cloneDeep(state.menus));
     if (state.menus.length === 0) return;
-
+    console.log("x system urlChage", fullPath, state.menus);
     // left menu
     let menu = state.menus.find(r => r.path === fullPath);
     if (menu) {
@@ -239,7 +242,6 @@ export default defineStore("systemStore", () => {
     changeTheme(state.userInfo.theme);
     changeLang(state.userInfo.lang);
     setMenus(cloneDeep(state.userInfo.menus));
-    urlChage();
   }
   // 登录
   // 调用登录方法

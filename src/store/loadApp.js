@@ -161,11 +161,4 @@ export default defineStore("loadAppStore", () => {
     });
   }, 20);
   watch(() => router.currentRoute.value.fullPath, onUrlChange);
-  // onUrlChange 事件
-  // window.__OSL.onUrlChange(onUrlChange);
-  // function pageStart() {
-  //   NProgress.start();
-  //   onUrlChange();
-  // }
-  // pageStart();
 });
