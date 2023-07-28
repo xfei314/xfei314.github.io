@@ -64,6 +64,6 @@ function onTabClick(id) {
 
 <style lang="less">
 .main-tabs {
-  padding: 0 12px;
+  // padding: 0 12px;
 }
 </style>

@@ -114,10 +114,7 @@ export default defineStore("systemStore", () => {
     if (!item) return;
     push(item.path);
   }
-  function urlChage() {
-    const fullPath = router.currentRoute.value.fullPath;
-    console.log("x system urlChage ", fullPath);
-    console.log("x system urlChage ", state.menus);
+  function findLastMenu(fullPath) {
     let menu = null;
     // last to first
     for (let i = state.menus.length - 1; i >= 0; i--) {
@@ -127,10 +124,22 @@ export default defineStore("systemStore", () => {
         break;
       }
     }
-    console.log("x system urlChage menu", menu);
-    let tab = {};
+    return menu;
+  }
+  function urlChage() {
+    const fullPath = router.currentRoute.value.fullPath;
+    // left menu
+    let menu = state.menus.find(r => r.path === fullPath);
     if (menu) {
       state.menuId = menu.id;
+    } else {
+      state.menuId = "";
+    }
+
+    // menu tabs
+    menu = findLastMenu(fullPath);
+    let tab = {};
+    if (menu) {
       tab = {
         id: menu.id,
         name: menu.name,
@@ -139,7 +148,6 @@ export default defineStore("systemStore", () => {
         fullPath: fullPath,
       };
     } else {
-      state.menuId = "";
       tab = {
         id: new Date().getTime() + "",
         title: "not find!",

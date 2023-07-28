@@ -95,8 +95,8 @@ function userCommand(id) {
 <style lang="less">
 .portal-header {
   background-color: var(--color-bg-2);
-  box-shadow: 0 1px 0 rgb(var(--gray-3));
-  z-index: 1;
+  box-shadow: 0 1px 6px rgb(var(--gray-3));
+  z-index: 2;
 
   display: flex;
   align-items: center;

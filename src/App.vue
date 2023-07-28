@@ -44,6 +44,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: row;
+    padding-top: 2px;
 
     .portal-content {
       flex: 1;
@@ -54,10 +55,12 @@ body {
       .app-view {
         flex: 1;
         height: 0;
-        overflow: auto;
         padding: 0 12px;
         overflow-y: scroll;
+        overflow-x: hidden;
         padding-right: 0;
+        border: 1px solid var(--color-neutral-3);
+        border-top: none;
       }
     }
   }
