@@ -17,7 +17,7 @@
       "src/components/Header/AppMenu.vue",
       "src/components/Login/LoginForm.vue"
     ],
-    "file": "assets/index-1e7b5c9f.js",
+    "file": "assets/index-61c06626.js",
     "isEntry": true,
     "src": "index.html"
   },
@@ -45,7 +45,7 @@
     "css": [
       "assets/LoginForm-d10d675b.css"
     ],
-    "file": "assets/LoginForm-f6c6e029.js",
+    "file": "assets/LoginForm-c02e932a.js",
     "isDynamicEntry": true,
     "src": "src/components/Login/LoginForm.vue"
   },
@@ -57,7 +57,7 @@
     "css": [
       "assets/About-b418489b.css"
     ],
-    "file": "assets/About-379752cf.js",
+    "file": "assets/About-d740ce7d.js",
     "imports": [
       "index.html"
     ],
@@ -72,7 +72,7 @@
     "css": [
       "assets/Home-0227de39.css"
     ],
-    "file": "assets/Home-82f8c156.js",
+    "file": "assets/Home-cf919f34.js",
     "imports": [
       "index.html"
     ],
@@ -80,7 +80,7 @@
     "src": "src/pages/Home.vue"
   },
   "src/pages/NoPermission.vue": {
-    "file": "assets/NoPermission-b09882de.js",
+    "file": "assets/NoPermission-920cac6d.js",
     "imports": [
       "index.html"
     ],
