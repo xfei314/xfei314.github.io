@@ -1,9 +1,18 @@
 <template>
   <div class="main-tabs">
-    <x-tabs v-model:active-key="data.curTab">
-      <x-tab-pane v-for="item in data.routerList" :key="item.id" :value="item.id">
-        <template #label>
-          <span :class="['x-icon', item.icon ?? '']"></span>
+    <x-tabs
+      type="card"
+      hide-content
+      v-model:active-key="state.menuTabId"
+      :editable="true"
+      @delete="onDelete"
+      @tab-click="onTabClick"
+      auto-switch
+      v-if="state.menuTabs.length > 0"
+    >
+      <x-tab-pane v-for="item in state.menuTabs" :key="item.id" :closable="item.name !== 'home'">
+        <template #title>
+          <icon v-if="item.icon" :name="item.icon" />
           {{ item.title }}
         </template>
       </x-tab-pane>
@@ -11,19 +20,20 @@
   </div>
 </template>
 <script setup>
-import { reactive, watch, ref } from "vue";
+import { ref, watch, watchPostEffect } from "vue";
 import router, { push } from "@/router";
 import { debounce } from "lodash-es";
-const data = reactive({
-  curTab: "k1",
-  routerList: [
-    { id: "k1", title: "home", path: "", icon: "" },
-    { id: "k2", title: "home", path: "" },
-    { id: "k3", title: "home", path: "" },
-    { id: "k4", title: "home", path: "" },
-  ],
-});
+import useSystem from "@/store/system";
+const { state } = useSystem();
 
+// watchPostEffect(() => {
+//   const id = tabId.value;
+//   console.log("x tabId", tabId);
+//   if (id) {
+//     let item = state.menuTabs.find(r => r.id === id);
+//     push(item.fullPath);
+//   }
+// });
 const routeChange = debounce(function () {
   const currentRoute = router.currentRoute.value;
   console.log("currentRoute", currentRoute);
@@ -36,12 +46,20 @@ watch(
     routeChange();
   }
 );
-const onDragend = ({ currentIndex, current, targetIndex, target }) => {
-  [data.routerList[currentIndex], data.routerList[targetIndex]] = [
-    data.routerList[targetIndex],
-    data.routerList[currentIndex],
-  ];
-};
+function onDelete(id) {
+  console.log("x onDelete ", id);
+}
+function onTabClick(id) {
+  console.log("x onTabClick ", id);
+  let item = state.menuTabs.find(r => r.id === id);
+  push(item.fullPath);
+}
+// const onDragend = ({ currentIndex, current, targetIndex, target }) => {
+//   [data.routerList[currentIndex], data.routerList[targetIndex]] = [
+//     data.routerList[targetIndex],
+//     data.routerList[currentIndex],
+//   ];
+// };
 </script>
 
 <style lang="less">

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import NProgress from "nprogress";
 import router, { addRoute, push } from "@/router";
-import { watchEffect } from "vue";
+import { watchEffect, watch } from "vue";
 import { debounce } from "lodash-es";
 import { addCss } from "@/utils";
 import useSystem from "@/store/system";
@@ -30,7 +30,7 @@ function loadHostMap() {
 loadHostMap();
 
 export default defineStore("loadAppStore", () => {
-  const { state, mergeLocaleMessage, chageMenuIdByUrl } = useSystem();
+  const { state, mergeLocaleMessage, urlChage } = useSystem();
   const appScript = {};
   console.log("xx loadAppStore init ");
 
@@ -131,20 +131,25 @@ export default defineStore("loadAppStore", () => {
   const npDone = debounce(() => {
     NProgress.done();
   }, 50);
+  const npStart = ({ to, from }) => {
+    if (from.fullPath !== to.fullPath) {
+      NProgress.start();
+    }
+  };
   // url 修改
   router.beforeEach((to, from, next) => {
-    NProgress.start();
+    npStart({ to, from });
     next();
   });
 
   const onUrlChange = debounce(() => {
-    chageMenuIdByUrl();
+    urlChage();
     const appName = getAppNameByUrl();
-    console.log(`xxxx onUrlChange [${new Date().getTime()}] urlChange appName `, appName);
     if (!appName) {
       // 默认页
       push("/home");
       npDone();
+
       return;
     }
     if (["about", "home"].includes(appName)) {
@@ -155,12 +160,12 @@ export default defineStore("loadAppStore", () => {
       npDone();
     });
   }, 20);
-  // watch(() => router.currentRoute.value.fullPath, urlChange);
+  watch(() => router.currentRoute.value.fullPath, onUrlChange);
   // onUrlChange 事件
-  window.__OSL.onUrlChange(onUrlChange);
-  function pageStart() {
-    NProgress.start();
-    onUrlChange();
-  }
-  pageStart();
+  // window.__OSL.onUrlChange(onUrlChange);
+  // function pageStart() {
+  //   NProgress.start();
+  //   onUrlChange();
+  // }
+  // pageStart();
 });

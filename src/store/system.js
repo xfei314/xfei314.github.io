@@ -10,7 +10,7 @@ import * as userApi from "@/api/user";
 import { Message } from "xdp";
 import { cloneDeep } from "lodash-es";
 import { isDev, sleep, setThemeColor } from "@/utils";
-import { push } from "@/router";
+import router, { push } from "@/router";
 
 const uiI18n = {
   zh_CN,
@@ -106,15 +106,53 @@ export default defineStore("systemStore", () => {
     },
     menuId: "",
     menus: [],
+    menuTabId: "",
+    menuTabs: [],
   });
-  function chageMenuIdByUrl() {
-    const fullPath = location.hash.substring(1);
-    const menu = state.menus.find(r => r.path === fullPath);
+  function changeUrlByMenuId(id) {
+    let item = state.menus.find(r => r.id === id);
+    if (!item) return;
+    push(item.path);
+  }
+  function urlChage() {
+    const fullPath = router.currentRoute.value.fullPath;
+    console.log("x system urlChage ", fullPath);
+    console.log("x system urlChage ", state.menus);
+    let menu = null;
+    // last to first
+    for (let i = state.menus.length - 1; i >= 0; i--) {
+      const item = state.menus[i];
+      if (fullPath.startsWith(item.path)) {
+        menu = item;
+        break;
+      }
+    }
+    console.log("x system urlChage menu", menu);
+    let tab = {};
     if (menu) {
       state.menuId = menu.id;
+      tab = {
+        id: menu.id,
+        name: menu.name,
+        title: menu.title,
+        icon: menu.icon,
+        fullPath: fullPath,
+      };
     } else {
       state.menuId = "";
+      tab = {
+        id: new Date().getTime() + "",
+        title: "not find!",
+        fullPath: fullPath,
+      };
+      tab.name = tab.id;
     }
+    console.log("x chageMenuIdByUrl tab", tab);
+    let titem = state.menuTabs.find(r => r.fullPath === tab.fullPath);
+    if (!titem) {
+      state.menuTabs.push(tab);
+    }
+    state.menuTabId = tab.id;
   }
   //  设置主题色
   watchPostEffect(() => {
@@ -122,18 +160,6 @@ export default defineStore("systemStore", () => {
       setThemeColor(state.primaryColor);
     }
   });
-  // 修改当前menuid
-  watch(
-    () => state.menuId,
-    id => {
-      if (!id) return;
-      let item = state.menus.find(r => r.id === id);
-      console.log("onItemClick item", item);
-      if (!item) return;
-
-      push(`${item.path}`);
-    }
-  );
 
   const { locale, mergeLocaleMessage } = useI18n();
   function showLoading() {
@@ -252,6 +278,7 @@ export default defineStore("systemStore", () => {
     changeTheme,
     setLangList,
     mergeLocaleMessage,
-    chageMenuIdByUrl,
+    urlChage,
+    changeUrlByMenuId,
   };
 });

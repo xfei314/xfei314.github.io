@@ -20,6 +20,14 @@ const user = {
     { id: "103", pid: "0", title: "app-test2", name: "xdp-t2", host: "" },
     { id: "10301", pid: "103", title: "t2-home", path: "/xdp-t2/home", target: "_black" },
     { id: "10302", pid: "103", title: "t2-about", path: "/xdp-t2/about", target: "_black" },
+    {
+      id: "10306",
+      pid: "105",
+      title: "t2-echart",
+      show: false,
+      path: "/xdp-t2/echart",
+      target: "_black",
+    },
 
     { id: "101", pid: "0", title: "系统管理", name: "xdp-sys", host: "" },
     { id: "10101", pid: "101", title: "用户管理", path: "/xdp-sys/a1", target: "_black" },
