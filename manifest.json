@@ -1,6 +1,6 @@
 {
   "index.css": {
-    "file": "assets/index-b961f8cb.css",
+    "file": "assets/index-20a5f3ee.css",
     "src": "index.css"
   },
   "index.html": {
@@ -8,7 +8,7 @@
       "assets/df-avatar-b9a54527.png"
     ],
     "css": [
-      "assets/index-b961f8cb.css"
+      "assets/index-20a5f3ee.css"
     ],
     "dynamicImports": [
       "src/pages/Home.vue",
@@ -17,7 +17,7 @@
       "src/components/Header/MenuDrawer.vue",
       "src/components/Login/index.vue"
     ],
-    "file": "assets/index-9284c8bd.js",
+    "file": "assets/index-36ae819d.js",
     "isEntry": true,
     "src": "index.html"
   },
@@ -45,7 +45,7 @@
     "css": [
       "assets/index-1f87a8ff.css"
     ],
-    "file": "assets/index-39f76caa.js",
+    "file": "assets/index-fdc121ec.js",
     "imports": [
       "index.html"
     ],
@@ -60,7 +60,7 @@
     "css": [
       "assets/About-587bdaf9.css"
     ],
-    "file": "assets/About-8c33e248.js",
+    "file": "assets/About-225976a8.js",
     "imports": [
       "index.html"
     ],
@@ -75,7 +75,7 @@
     "css": [
       "assets/Home-07bcde18.css"
     ],
-    "file": "assets/Home-dab43b9c.js",
+    "file": "assets/Home-36906513.js",
     "imports": [
       "index.html"
     ],
@@ -83,7 +83,7 @@
     "src": "src/pages/Home.vue"
   },
   "src/pages/NoPermission.vue": {
-    "file": "assets/NoPermission-3e9c9110.js",
+    "file": "assets/NoPermission-b6cf5076.js",
     "imports": [
       "index.html"
     ],
