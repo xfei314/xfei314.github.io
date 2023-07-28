@@ -128,8 +128,13 @@ export default defineStore("systemStore", () => {
   }
   watch(() => state.menus, urlChage);
   function urlChage() {
-    if (state.menus.length === 0) return;
     const fullPath = router.currentRoute.value.fullPath;
+    console.log("x system urlChage fullPath", fullPath);
+    if (fullPath === "/") return;
+
+    console.log("x system urlChage", cloneDeep(state.menus));
+    if (state.menus.length === 0) return;
+
     // left menu
     let menu = state.menus.find(r => r.path === fullPath);
     if (menu) {
