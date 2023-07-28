@@ -126,7 +126,9 @@ export default defineStore("systemStore", () => {
     }
     return menu;
   }
+  watch(() => state.menus, urlChage);
   function urlChage() {
+    if (state.menus.length === 0) return;
     const fullPath = router.currentRoute.value.fullPath;
     // left menu
     let menu = state.menus.find(r => r.path === fullPath);
@@ -232,6 +234,7 @@ export default defineStore("systemStore", () => {
     changeTheme(state.userInfo.theme);
     changeLang(state.userInfo.lang);
     setMenus(cloneDeep(state.userInfo.menus));
+    urlChage();
   }
   // 登录
   // 调用登录方法
