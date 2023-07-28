@@ -16,7 +16,7 @@
 
 <script setup>
 import { reactive } from "vue";
-import { Message } from "xdp";
+
 defineProps({
   loading: Boolean,
 });

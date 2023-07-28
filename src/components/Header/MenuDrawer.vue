@@ -1,7 +1,5 @@
 <template>
   <x-drawer
-    destroyOnClose
-    attach="body"
     class="app-menu-drawer"
     :style="style"
     size="100%"
@@ -11,14 +9,13 @@
     :footer="false"
     :showOverlay="false"
   >
-    <Dynamic :is="AppMenu" />
+    <x-dynamic :is="AppMenu" />
   </x-drawer>
 </template>
 <script setup>
-import { computed, ref } from "vue";
-import { Dynamic } from "xdp";
+import { computed } from "vue";
 
-const AppMenu = () => import("./AppMenu.vue");
+import AppMenu from "./AppMenu.vue";
 
 const props = defineProps({
   modelValue: Boolean,

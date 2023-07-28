@@ -11,8 +11,7 @@
       </div>
     </div>
     <div class="portal-footer"></div>
-
-    <loginWin v-model="state.showLoginWin" />
+    <x-dynamic :is="loginWin" v-if="state.showLoginWin" v-model="state.showLoginWin" />
   </ConfigProvider>
 </template>
 <script setup>
@@ -22,12 +21,18 @@ import Header from "@/components/Header/index.vue";
 import LeftMenu from "@/components/LeftMenu/LeftMenu.vue";
 import MainTabs from "@/components/MainTabs.vue";
 import useSystem from "@/store/system";
-import loginWin from "@/components/Login/index.vue";
 import useLoadApp from "@/store/loadApp";
+
 const { state } = useSystem();
 useLoadApp();
+
+const loginWin = () => import("@/components/Login/index.vue");
 </script>
 <style lang="less">
+body {
+  color: var(--color-text-2);
+  background-color: var(--color-bg-1);
+}
 #xdp-portal {
   width: 100%;
   height: 100%;
@@ -51,6 +56,9 @@ useLoadApp();
         flex: 1;
         height: 0;
         overflow: auto;
+        padding: 0 12px;
+        overflow-y: scroll;
+        padding-right: 0;
       }
     }
   }

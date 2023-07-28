@@ -1,18 +1,17 @@
 <template>
   <div class="main-tabs">
-    <Tabs v-model:active-key="data.curTab">
-      <TabPane v-for="item in data.routerList" :key="item.id" :value="item.id">
+    <x-tabs v-model:active-key="data.curTab">
+      <x-tab-pane v-for="item in data.routerList" :key="item.id" :value="item.id">
         <template #label>
           <span :class="['x-icon', item.icon ?? '']"></span>
           {{ item.title }}
         </template>
-      </TabPane>
-    </Tabs>
+      </x-tab-pane>
+    </x-tabs>
   </div>
 </template>
 <script setup>
 import { reactive, watch, ref } from "vue";
-import { Tabs, TabPane } from "xdp";
 import router, { push } from "@/router";
 import { debounce } from "lodash-es";
 const data = reactive({

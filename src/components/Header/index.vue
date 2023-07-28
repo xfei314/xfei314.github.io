@@ -9,45 +9,29 @@
       </div>
     </div>
     <div class="right-box">
-      <x-dropdown v-model:popup-visible="langVisible" @select="langCommand">
-        <span class="x-dropdown-btn">
-          <icon name="xp-i18n" /> <icon :name="langVisible ? 'xp-arrow_up' : 'xp-arrow_down'" />
-        </span>
-        <template #content>
-          <x-doption v-for="item in systemState.langList" :key="item.id" :value="item.id" :active="item.id === lang">
-            {{ item.value }}
-          </x-doption>
-        </template>
-      </x-dropdown>
+      <Dropdown @select="langCommand" :active="lang" :list="systemState.langList">
+        <icon name="xp-i18n" />
+      </Dropdown>
 
       <x-theme-button v-model="theme" />
 
-      <x-dropdown @select="userCommand">
-        <span class="x-dropdown-btn">
-          <x-avatar class="user-avatar">
-            <img v-if="userAvatarUrl" :src="userAvatarUrl" alt="" />
-            <img v-else :src="dfaUrl" alt="" />
-          </x-avatar>
-          <icon name="xp-arrow_down" />
-        </span>
-        <template #content>
-          <x-doption v-for="item in data.userMeunList" :key="item.id" :value="item.id" :active="item.id === lang">
-            {{ item.value }}
-          </x-doption>
-        </template>
-      </x-dropdown>
+      <Dropdown @select="userCommand" :list="data.userMeunList">
+        <x-avatar class="user-avatar">
+          <img v-if="userAvatarUrl" :src="userAvatarUrl" alt="" />
+          <img v-else :src="dfaUrl" alt="" />
+        </x-avatar>
+      </Dropdown>
     </div>
-    <MenuDrawer :top="data.headerHeight" v-model="data.appMenuVisible" />
+    <x-dynamic v-if="data.appMenuVisible" :is="MenuDrawer" :top="data.headerHeight" v-model="data.appMenuVisible" />
   </header>
 </template>
 <script setup>
-import MenuDrawer from "./MenuDrawer.vue";
 import { computed, ref, reactive } from "vue";
-import { push } from "@/router";
 import useSystem from "@/store/system";
+import Dropdown from "./Dropdown.vue";
 import dfaUrl from "@/assets/df-avatar.png";
-console.log("x dfaUrl", dfaUrl);
-const langVisible = ref(false);
+const MenuDrawer = () => import("./MenuDrawer.vue");
+
 const { state: systemState, logout, changeTheme, changeLang } = useSystem();
 
 const refMain = ref(null);
@@ -62,6 +46,7 @@ const data = reactive({
     },
   ],
 });
+
 const theme = computed({
   get: () => {
     return systemState.theme;
@@ -109,7 +94,8 @@ function userCommand(id) {
 
 <style lang="less">
 .portal-header {
-  box-shadow: var(--td-shadow-inset-bottom);
+  border-bottom: 1px solid var(--color-border-1);
+  z-index: 1;
 
   display: flex;
   align-items: center;
@@ -137,7 +123,7 @@ function userCommand(id) {
     }
   }
 
-  .x-dropdown-btn {
+  .dropdown-btn {
     cursor: pointer;
     font-size: 14px;
     display: flex;

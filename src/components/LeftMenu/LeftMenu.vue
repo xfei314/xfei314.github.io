@@ -70,6 +70,8 @@ function onItemClick(id) {
 
 <style lang="less" scoped>
 .portal-aside {
+  border-right: 1px solid var(--color-border-1);
+  box-shadow: 4px 6px 8px 0 rgba(0, 0, 0, 0.2);
   :deep(.xdp-menu) {
     height: 100%;
     .xdp-menu-inner {

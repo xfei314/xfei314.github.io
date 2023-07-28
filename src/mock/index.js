@@ -13,7 +13,13 @@ const user = {
   avatar: "",
   menus: [
     { id: "90", pid: "0", title: "首页", name: "home", path: "/home", host: "" },
-    { id: "91", pid: "0", title: "关于我们", name: "about", path: "/about", host: "" },
+    { id: "102", pid: "0", title: "app-test1", name: "xdp-t1", host: "" },
+    { id: "10201", pid: "102", title: "t1-home", path: "/xdp-t1/home", target: "_black" },
+    { id: "10202", pid: "102", title: "t1-about", path: "/xdp-t1/about", target: "_black" },
+
+    { id: "103", pid: "0", title: "app-test2", name: "xdp-t2", host: "" },
+    { id: "10301", pid: "103", title: "t2-home", path: "/xdp-t2/home", target: "_black" },
+    { id: "10302", pid: "103", title: "t2-about", path: "/xdp-t2/about", target: "_black" },
 
     { id: "101", pid: "0", title: "系统管理", name: "xdp-sys", host: "" },
     { id: "10101", pid: "101", title: "用户管理", path: "/xdp-sys/a1", target: "_black" },
@@ -21,13 +27,7 @@ const user = {
     { id: "10103", pid: "101", title: "功能管理", path: "/xdp-sys/a3" },
     { id: "10104", pid: "101", title: "菜单管理", path: "/xdp-sys/a4" },
 
-    { id: "102", pid: "0", title: "t1管理", name: "xdp-t1", host: "" },
-    { id: "10201", pid: "102", title: "t1-home", path: "/xdp-t1/home", target: "_black" },
-    { id: "10202", pid: "102", title: "t1-about", path: "/xdp-t1/about", target: "_black" },
-
-    { id: "103", pid: "0", title: "t2管理", name: "xdp-t2", host: "" },
-    { id: "10301", pid: "103", title: "t2-home", path: "/xdp-t2/home", target: "_black" },
-    { id: "10302", pid: "103", title: "t2-about", path: "/xdp-t2/about", target: "_black" },
+    { id: "91", pid: "0", title: "关于我们", name: "about", path: "/about", host: "" },
   ],
 };
 

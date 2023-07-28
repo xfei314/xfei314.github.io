@@ -9,7 +9,6 @@
       <h3>1 动态修改主题色</h3>
       <pre>{{`<input type="color" v-model="color" />`}}</pre>
       <input type="color" v-model="state.primaryColor" />
-      <x-color-picker v-model="state.primaryColor" />
       <h4>{{ state.primaryColor }}</h4>
     </div>
   </div>

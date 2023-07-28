@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <x-modal
     title="登录"
     title-align="left"
     v-model:visible="visible"
@@ -11,18 +11,19 @@
     width="400px"
     draggable
   >
-    <Dynamic :is="LoginForm" @submit="submit" @close="visible = false" :loading="loading" />
-  </Modal>
+    <LoginForm @submit="submit" @close="visible = false" :loading="loading" />
+  </x-modal>
 </template>
 <script setup>
 // import Dynamic from "@/components/dynamic";
 import { ref } from "vue";
-import { Modal, Message, Dynamic } from "xdp";
+import { Message } from "xdp";
+import LoginForm from "./LoginForm.vue";
 import useSystem from "@/store/system";
 const { login } = useSystem();
 const loading = ref(false);
 const visible = defineModel();
-const LoginForm = () => import("./LoginForm.vue");
+
 async function submit({ account, password }) {
   loading.value = true;
   // 验证成功 提交

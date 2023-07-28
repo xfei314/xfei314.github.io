@@ -5,7 +5,8 @@
 		<div class="box">
 			<h3>1 点击选择颜色</h3>
 			<pre>{{`<input type="color" v-model="color" />`}}</pre>
-			<input type="color" v-model="color" />
+			<x-color-picker v-model="color" />
+			<input type="color" v-model="color" /> 
 			<h4>{{ color }}</h4>
 
 			<h3>1.2 日期</h3>
