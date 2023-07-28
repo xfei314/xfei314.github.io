@@ -1,6 +1,6 @@
 {
   "index.css": {
-    "file": "assets/index-8b2db835.css",
+    "file": "assets/index-8a2616b9.css",
     "src": "index.css"
   },
   "index.html": {
@@ -8,7 +8,7 @@
       "assets/df-avatar-b9a54527.png"
     ],
     "css": [
-      "assets/index-8b2db835.css"
+      "assets/index-8a2616b9.css"
     ],
     "dynamicImports": [
       "src/pages/Home.vue",
@@ -17,7 +17,7 @@
       "src/components/Header/AppMenu.vue",
       "src/components/Login/LoginForm.vue"
     ],
-    "file": "assets/index-61c06626.js",
+    "file": "assets/index-404ccfd7.js",
     "isEntry": true,
     "src": "index.html"
   },
@@ -57,7 +57,7 @@
     "css": [
       "assets/About-b418489b.css"
     ],
-    "file": "assets/About-d740ce7d.js",
+    "file": "assets/About-1616c2b7.js",
     "imports": [
       "index.html"
     ],
@@ -72,7 +72,7 @@
     "css": [
       "assets/Home-0227de39.css"
     ],
-    "file": "assets/Home-cf919f34.js",
+    "file": "assets/Home-c0fa6d2a.js",
     "imports": [
       "index.html"
     ],
@@ -80,7 +80,7 @@
     "src": "src/pages/Home.vue"
   },
   "src/pages/NoPermission.vue": {
-    "file": "assets/NoPermission-920cac6d.js",
+    "file": "assets/NoPermission-1cd19bf5.js",
     "imports": [
       "index.html"
     ],
