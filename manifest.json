@@ -1,9 +1,6 @@
 {
-  "_package-db369734.js": {
-    "file": "assets/package-db369734.js"
-  },
   "index.css": {
-    "file": "assets/index-61b33d69.css",
+    "file": "assets/index-8b2db835.css",
     "src": "index.css"
   },
   "index.html": {
@@ -11,7 +8,7 @@
       "assets/df-avatar-b9a54527.png"
     ],
     "css": [
-      "assets/index-61b33d69.css"
+      "assets/index-8b2db835.css"
     ],
     "dynamicImports": [
       "src/pages/Home.vue",
@@ -20,7 +17,7 @@
       "src/components/Header/AppMenu.vue",
       "src/components/Login/LoginForm.vue"
     ],
-    "file": "assets/index-65d32525.js",
+    "file": "assets/index-1e7b5c9f.js",
     "isEntry": true,
     "src": "index.html"
   },
@@ -53,39 +50,37 @@
     "src": "src/components/Login/LoginForm.vue"
   },
   "src/pages/About.css": {
-    "file": "assets/About-b8d96118.css",
+    "file": "assets/About-b418489b.css",
     "src": "src/pages/About.css"
   },
   "src/pages/About.vue": {
     "css": [
-      "assets/About-b8d96118.css"
+      "assets/About-b418489b.css"
     ],
-    "file": "assets/About-b706df31.js",
+    "file": "assets/About-379752cf.js",
     "imports": [
-      "_package-db369734.js",
       "index.html"
     ],
     "isDynamicEntry": true,
     "src": "src/pages/About.vue"
   },
   "src/pages/Home.css": {
-    "file": "assets/Home-bd14f7b2.css",
+    "file": "assets/Home-0227de39.css",
     "src": "src/pages/Home.css"
   },
   "src/pages/Home.vue": {
     "css": [
-      "assets/Home-bd14f7b2.css"
+      "assets/Home-0227de39.css"
     ],
-    "file": "assets/Home-fc1ddc9f.js",
+    "file": "assets/Home-82f8c156.js",
     "imports": [
-      "_package-db369734.js",
       "index.html"
     ],
     "isDynamicEntry": true,
     "src": "src/pages/Home.vue"
   },
   "src/pages/NoPermission.vue": {
-    "file": "assets/NoPermission-b6cb67b1.js",
+    "file": "assets/NoPermission-b09882de.js",
     "imports": [
       "index.html"
     ],
