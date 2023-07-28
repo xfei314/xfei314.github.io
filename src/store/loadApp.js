@@ -30,7 +30,7 @@ function loadHostMap() {
 loadHostMap();
 
 export default defineStore("loadAppStore", () => {
-  const { state, mergeLocaleMessage } = useSystem();
+  const { state, mergeLocaleMessage, chageMenuIdByUrl } = useSystem();
   const appScript = {};
   console.log("xx loadAppStore init ");
 
@@ -136,7 +136,9 @@ export default defineStore("loadAppStore", () => {
     NProgress.start();
     next();
   });
+
   const onUrlChange = debounce(() => {
+    chageMenuIdByUrl();
     const appName = getAppNameByUrl();
     console.log(`xxxx onUrlChange [${new Date().getTime()}] urlChange appName `, appName);
     if (!appName) {

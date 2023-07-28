@@ -104,9 +104,18 @@ export default defineStore("systemStore", () => {
       roles: [], // 角色
       permissionList: [], // 权限点
     },
-    menuId: "10302001",
+    menuId: "",
     menus: [],
   });
+  function chageMenuIdByUrl() {
+    const fullPath = location.hash.substring(1);
+    const menu = state.menus.find(r => r.path === fullPath);
+    if (menu) {
+      state.menuId = menu.id;
+    } else {
+      state.menuId = "";
+    }
+  }
   //  设置主题色
   watchPostEffect(() => {
     if (state.primaryColor) {
@@ -233,5 +242,16 @@ export default defineStore("systemStore", () => {
     { id: "en_US", value: "English" },
   ]);
   initUser();
-  return { state, showLoading, hideLoading, login, logout, changeLang, changeTheme, setLangList, mergeLocaleMessage };
+  return {
+    state,
+    showLoading,
+    hideLoading,
+    login,
+    logout,
+    changeLang,
+    changeTheme,
+    setLangList,
+    mergeLocaleMessage,
+    chageMenuIdByUrl,
+  };
 });

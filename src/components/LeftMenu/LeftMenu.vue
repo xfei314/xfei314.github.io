@@ -16,10 +16,11 @@
   </aside>
 </template>
 <script setup>
-import { ref, watchPostEffect } from "vue";
+import { ref, watch } from "vue";
 import MenuTree from "./MenuTree";
 import useSystem from "@/store/system";
-
+import router from "@/router";
+import { debounce } from "lodash-es";
 const { state } = useSystem();
 
 // 收缩
@@ -35,11 +36,30 @@ const collapsed = ref(false);
 const selectedKeys = ref([]);
 const openKeys = ref([]);
 
-watchPostEffect(() => {
-  let id = state.menuId;
-  if (!id) return;
+const changeOpenKeysByUrl = debounce(() => {
+  const keys = [];
+  const urls = location.hash.split("/");
+  const appName = urls[1];
+  const app = state.menus.find(r => r.pid === rootId.value && r.name === appName);
+  if (app) {
+    keys.push(app.id);
+  }
+  openKeys.value = keys;
+}, 200);
+watch(() => router.currentRoute.value.fullPath, changeOpenKeysByUrl);
+
+function changeSelectKeysMenuId(id) {
+  if (!id) {
+    selectedKeys.value = [""];
+    changeOpenKeysByUrl();
+    return;
+  }
   let item = state.menus?.find(r => r.id === id);
-  if (!item) return;
+  if (!item) {
+    selectedKeys.value = [""];
+    changeOpenKeysByUrl();
+    return;
+  }
   const opens = [item.pid];
   // 最多3级
   if (item.pid !== rootId.value) {
@@ -51,11 +71,9 @@ watchPostEffect(() => {
   console.log("xx selected", id);
   openKeys.value = opens;
   selectedKeys.value = [id];
-});
-// const handleSelect = id => {
-//   console.log("handleSelect key", id);
-//   changeMenuById(id);
-// };
+}
+watch(() => state.menuId, changeSelectKeysMenuId);
+
 function onSubClick(id) {
   console.log("onSubClick key", id);
 }
