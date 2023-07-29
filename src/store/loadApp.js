@@ -7,12 +7,6 @@ import { addCss } from "@/utils";
 import useSystem from "@/store/system";
 NProgress.configure({ showSpinner: false });
 
-function getAppNameByUrl() {
-  const arr = location.hash.split("/");
-  const appName = arr[1] ?? "";
-  if (!appName) return "";
-  return appName;
-}
 // 记录 app 的 host
 let hostMap = {
   // t1: "/v1/app/t1",
@@ -30,10 +24,9 @@ function loadHostMap() {
 loadHostMap();
 
 export default defineStore("loadAppStore", () => {
-  const { state, mergeLocaleMessage, urlChage } = useSystem();
+  const { state, mergeLocaleMessage } = useSystem();
   const appScript = {};
   console.log("xx loadAppStore init ");
-
   /**
    * 加载子产品
    * @param {子产品名称} name
@@ -143,13 +136,13 @@ export default defineStore("loadAppStore", () => {
   });
 
   const onUrlChange = debounce(() => {
-    urlChage();
-    const appName = getAppNameByUrl();
+    const arr = location.hash.split("/");
+    const appName = arr[1] ?? "";
+
     if (!appName) {
       // 默认页
       push("/home");
       npDone();
-
       return;
     }
     if (["about", "home"].includes(appName)) {

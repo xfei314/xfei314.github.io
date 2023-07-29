@@ -1,5 +1,5 @@
 <template>
-  <ConfigProvider :locale="state.uiLang">
+  <x-config-provider :locale="state.uiLang">
     <Header class="portal-header" />
     <main class="portal-content-main">
       <LeftMenu />
@@ -12,17 +12,14 @@
     </main>
     <footer class="portal-footer"></footer>
     <x-dynamic :is="loginWin" v-if="state.showLoginWin" v-model="state.showLoginWin" />
-  </ConfigProvider>
+  </x-config-provider>
 </template>
 <script setup>
-import { ConfigProvider } from "xdp";
-
 import Header from "@/components/Header/index.vue";
 import LeftMenu from "@/components/LeftMenu/LeftMenu.vue";
 import MainTabs from "@/components/MainTabs.vue";
 import useSystem from "@/store/system";
 import useLoadApp from "@/store/loadApp";
-
 const { state } = useSystem();
 useLoadApp();
 

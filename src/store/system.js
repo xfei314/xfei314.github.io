@@ -8,7 +8,7 @@ import { setSessionData } from "@/utils";
 import * as userApi from "@/api/user";
 
 import { Message } from "xdp";
-import { cloneDeep } from "lodash-es";
+import { cloneDeep, debounce } from "lodash-es";
 import { isDev, sleep, setThemeColor } from "@/utils";
 import router, { push } from "@/router";
 
@@ -84,8 +84,8 @@ addAllRequestFn();
 
 export default defineStore("systemStore", () => {
   console.log("xx useSystemStore init ");
+  const { locale, mergeLocaleMessage } = useI18n();
   const state = reactive({
-    xdpLoading: false,
     showLoginWin: false,
     lang: "",
     theme: "",
@@ -104,10 +104,13 @@ export default defineStore("systemStore", () => {
       roles: [], // 角色
       permissionList: [], // 权限点
     },
+    // meun
     menuId: "",
     menus: [],
     menuTabId: "",
     menuTabs: [],
+    // beforeEach url
+    beforeFullPath: "",
   });
   function changeUrlByMenuId(id) {
     let item = state.menus.find(r => r.id === id);
@@ -126,20 +129,38 @@ export default defineStore("systemStore", () => {
     }
     return menu;
   }
-  watch(
-    () => state.menus,
-    () => {
-      if (state.menus.length === 0) return;
-      urlChage();
+  // 删除 meun tabs
+  function deleteMenuTabs(id) {
+    if (state.menuTabs.length === 0) return;
+    let index = state.menuTabs.findIndex(r => r.id === id);
+    if (index === -1) return;
+    let item = state.menuTabs[index];
+    if (!item) return;
+    const needSetId = state.menuTabId === item.id;
+    let fullPath = "/";
+    if (state.menuTabs.length === 1) {
+      state.menuTabs = [];
+    } else {
+      // delete
+      if (needSetId) {
+        if (index === state.menuTabs.length - 1) {
+          fullPath = state.menuTabs[index - 1].fullPath;
+        } else {
+          fullPath = state.menuTabs[index + 1].fullPath;
+        }
+      }
+      state.menuTabs.splice(index, 1);
     }
-  );
-  function urlChage() {
-    const fullPath = router.currentRoute.value.fullPath;
+    if (needSetId) push(fullPath);
+  }
+  // set left menu  ， main tabs
+  const setMenuAndTabs = debounce(({ menus, fullPath }) => {
+    if (!fullPath) return;
     if (fullPath === "/") return;
-    if (state.menus.length === 0) return;
-    console.log("x system urlChage", fullPath, state.menus);
+    if (menus.length === 0) return;
+    console.log("x system setMenuAndTabs", fullPath);
     // left menu
-    let menu = state.menus.find(r => r.path === fullPath);
+    let menu = menus.find(r => r.path === fullPath);
     if (menu) {
       state.menuId = menu.id;
     } else {
@@ -147,31 +168,44 @@ export default defineStore("systemStore", () => {
     }
 
     // menu tabs
-    menu = findLastMenu(fullPath);
-    let tab = {};
-    if (menu) {
-      tab = {
-        id: menu.id,
-        name: menu.name,
-        title: menu.title,
-        icon: menu.icon,
-        fullPath: fullPath,
-      };
-    } else {
-      tab = {
-        id: new Date().getTime() + "",
-        title: "not find!",
-        fullPath: fullPath,
-      };
-      tab.name = tab.id;
-    }
-    console.log("x chageMenuIdByUrl tab", tab);
-    let titem = state.menuTabs.find(r => r.fullPath === tab.fullPath);
-    if (!titem) {
+    let tab = state.menuTabs.find(r => r.fullPath === fullPath);
+    if (!tab) {
+      // add
+      menu = findLastMenu(fullPath);
+      console.log("x system setMenuAndTabs findLastMenu menu", menu);
+      if (menu) {
+        tab = {
+          id: new Date().getTime() + "",
+          name: menu.name,
+          title: menu.title,
+          icon: menu.icon,
+          fullPath: fullPath,
+        };
+      } else {
+        tab = {
+          id: new Date().getTime() + "",
+          title: "not find!",
+          fullPath: fullPath,
+        };
+        tab.name = tab.id;
+      }
       state.menuTabs.push(tab);
     }
     state.menuTabId = tab.id;
-  }
+  }, 200);
+  // url 修改
+  router.beforeEach((to, from, next) => {
+    state.beforeFullPath = to.fullPath;
+    next();
+  });
+  watch(
+    () => [state.menus, state.beforeFullPath],
+    () => {
+      setMenuAndTabs({ menus: state.menus, fullPath: state.beforeFullPath });
+    },
+    { immediate: true }
+  );
+
   //  设置主题色
   watchPostEffect(() => {
     if (state.primaryColor) {
@@ -179,13 +213,6 @@ export default defineStore("systemStore", () => {
     }
   });
 
-  const { locale, mergeLocaleMessage } = useI18n();
-  function showLoading() {
-    state.xdpLoading = true;
-  }
-  function hideLoading() {
-    state.xdpLoading = false;
-  }
   function setLangList(arr) {
     state.langList = arr;
   }
@@ -288,15 +315,13 @@ export default defineStore("systemStore", () => {
   initUser();
   return {
     state,
-    showLoading,
-    hideLoading,
     login,
     logout,
     changeLang,
     changeTheme,
     setLangList,
     mergeLocaleMessage,
-    urlChage,
     changeUrlByMenuId,
+    deleteMenuTabs,
   };
 });

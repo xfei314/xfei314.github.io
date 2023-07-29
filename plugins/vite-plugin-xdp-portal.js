@@ -52,6 +52,7 @@ export default ({ path: webDir, oslUrl, oslBase, isDev }) => {
   let oslJsUrl = "";
   let oslCssUrl = "";
   let oslCsslink = "";
+  const allOslCss = [];
 
   function getImportStr(code, name) {
     let curImportStr = `import"${name}";`;
@@ -163,21 +164,30 @@ export default ({ path: webDir, oslUrl, oslBase, isDev }) => {
       console.log("x buildStart url: ", url);
       const res = await axios.get(url);
       oslManifest = res.data;
+      console.log("x oslManifest", oslManifest);
       moduleMap = oslManifest.moduleMap;
       oslVueName = moduleMap.vue;
       const oslUrlPre = isDev ? `${oslUrl}${oslBase}/` : `${oslBase}/`;
+
       for (const key in oslManifest) {
         const item = oslManifest[key];
         // 入口文件
         if (item.isEntry) {
           oslJsUrl = `${oslUrlPre}${item.file}`;
+          // css
+          if (item.css) {
+            oslCssUrl = `${oslUrlPre}${item.css[0]}`;
+            oslCsslink = `<link rel="stylesheet" href="${oslCssUrl}" />`;
+          }
         }
-        // css
-        if (key === "style.css") {
-          // css 文件
-          oslCssUrl = `${oslUrlPre}${item.file}`;
-          oslCsslink = `<link rel="stylesheet" href="${oslCssUrl}" />`;
-        }
+        // all css
+        if (item.css) allOslCss.push(`${oslUrlPre}${item.css[0]}`);
+
+        // if (key === "style.css") {
+        //   // css 文件
+        //   oslCssUrl = `${oslUrlPre}${item.file}`;
+        //   oslCsslink = `<link rel="stylesheet" href="${oslCssUrl}" />`;
+        // }
       }
 
       return options;
@@ -202,7 +212,7 @@ export default ({ path: webDir, oslUrl, oslBase, isDev }) => {
       let entryScript = html.substring(begin);
       const lastStr = "</script>";
       entryScript = entryScript.substring(0, entryScript.indexOf(lastStr) + lastStr.length);
-      const oslJsScript = `<script>window.__oslCssUrl="${oslCssUrl}"; </script><script type="module" src="${oslJsUrl}" ></script>`;
+      const oslJsScript = `<script>window.__oslCssUrl="${oslCssUrl}"; window.__allOslCss="${allOslCss}";</script><script type="module" src="${oslJsUrl}" ></script>`;
 
       let importAppJS = `${entryScript}`;
       if (isDev) {

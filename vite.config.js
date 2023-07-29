@@ -11,7 +11,7 @@ import xdpPortal from "./plugins/vite-plugin-xdp-portal.js"; // 使用xdp 微前
 import { name as appName } from "./package.json";
 
 export default defineConfig(({ command, mode }) => {
-  console.log("x vite.config.js ", mode, command);
+  // console.log("x vite.config.js ", mode, command);
   const env = {
     processEnv: process.env,
     isDev: mode === "development",
@@ -85,7 +85,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     build: {
-      minify: true, // 不压缩
+      // minify: false, // 不压缩
       modulePreload: { polyfill: false },
     },
   };

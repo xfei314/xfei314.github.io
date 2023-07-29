@@ -1,3 +1,4 @@
+// import "./__UrlChange";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import "./theme";
