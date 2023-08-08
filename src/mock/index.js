@@ -13,13 +13,13 @@ const user = {
   avatar: "",
   menus: [
     { id: "90", pid: "0", title: "首页", name: "home", path: "/home", host: "" },
-    { id: "102", pid: "0", title: "app-test1", name: "xdp-t1", host: "" },
-    { id: "10201", pid: "102", title: "t1-home", path: "/xdp-t1/home", target: "_black" },
-    { id: "10202", pid: "102", title: "t1-about", path: "/xdp-t1/about", target: "_black" },
+    { id: "102", pid: "0", title: "app-3d", name: "xdp-3d", host: "" },
+    { id: "10201", pid: "102", title: "3d-home", path: "/xdp-3d/home" },
+    { id: "10202", pid: "102", title: "cesium demo", path: "/xdp-3d/cesium" },
 
     { id: "103", pid: "0", title: "app-test2", name: "xdp-t2", host: "" },
-    { id: "10301", pid: "103", title: "t2-home", path: "/xdp-t2/home", target: "_black" },
-    { id: "10302", pid: "103", title: "t2-about", path: "/xdp-t2/about", target: "_black" },
+    { id: "10301", pid: "103", title: "t2-home", path: "/xdp-t2/home" },
+    { id: "10302", pid: "103", title: "t2-about", path: "/xdp-t2/about" },
     {
       id: "10306",
       pid: "105",

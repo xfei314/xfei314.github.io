@@ -32,7 +32,7 @@
     "prettier": "^2.8.8",
     "rollup-plugin-visualizer": "^5.8.1",
     "vite": "^4.4.5",
-    "vite-plugin-mock": "^2.9.6",
+    "vite-plugin-mock": "^2.9.8",
     "vite-plugin-svg-icons": "^2.0.1"
   }
 }

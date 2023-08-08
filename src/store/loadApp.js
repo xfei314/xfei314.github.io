@@ -41,7 +41,7 @@ export default defineStore("loadAppStore", () => {
     const dfHost = hostMap["df"] ?? "/v1";
     let host = hostMap[name] ?? dfHost;
     // app 本地调试
-    if (window.__XDP_DEV_TYPE === "app") {
+    if (window.__XDP_DEV_APP === name) {
       // 找到入口文件 然后加载
       let subAppJsUrl = `${host}/src/index.js`;
       await loadByEntryUrl(name, subAppJsUrl);
