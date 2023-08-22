@@ -17,7 +17,7 @@
     "vue": "^3.3.4",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.2.2",
-    "xdp": "0.1.60"
+    "xdp": "^0.1.61"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

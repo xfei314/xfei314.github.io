@@ -164,7 +164,6 @@ export default ({ path: webDir, oslUrl, oslBase, isDev }) => {
       console.log("x buildStart url: ", url);
       const res = await axios.get(url);
       oslManifest = res.data;
-      console.log("x oslManifest", oslManifest);
       moduleMap = oslManifest.moduleMap;
       oslVueName = moduleMap.vue;
       const oslUrlPre = isDev ? `${oslUrl}${oslBase}/` : `${oslBase}/`;
